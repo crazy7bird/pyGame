@@ -15,6 +15,19 @@ BRICK_ROWS = 21
 MAX_BRICK = BRICK_LINES * BRICK_ROWS
 PIXELS_SPACING = 1
 
+def generateArray() -> list[list[brick]] :
+    el = [[]]
+    for l in range(BRICK_LINES) :
+        el.append([None])
+        for r in range(BRICK_ROWS) :
+            el[l].append(None)
+    return el
+
+def flatWallGenerator(wall : list[list[brick]]):
+    for l in range(BRICK_LINES):
+        for r in range(BRICK_ROWS):
+            yield wall[l][r]
+
 @dataclass 
 class colideReport :
     top : bool
@@ -32,33 +45,38 @@ class wall :
     brick_height : int
     brick_width : int
 
-    bricks : list[brick]
+    bricks : list[list[brick]]
 
     def __init__(self, window : pyglet.window) -> None:
-        self.bricks = []
+        self.bricks = generateArray()
         self.min_height = window.height * 1/2
         self.max_height = window.height * 13/16
         self.min_width = window.width * 1/6
         self.max_width = window.width * 5/6
         self.brick_height = (( self.max_height - self.min_height - PIXELS_SPACING) / (BRICK_LINES + 1))
         self.brick_width =  (( self.max_width - self.min_width - PIXELS_SPACING ) /(BRICK_ROWS + 1))
-
+    
     def empty(self) :
         for brick in self.bricks :
             brick.img.delete()
         self.bricks.clear()
 
     def fill(self, n: int) :
-        for i in range(BRICK_LINES) :
-            for e in range(BRICK_ROWS) :
-                x = self.min_width + (e * (self.brick_width + PIXELS_SPACING))
-                y = self.min_height + (i * (self.brick_height + PIXELS_SPACING))
-                self.bricks.append( brick(x,y,self.brick_width,self.brick_height) )
+        for l in range(BRICK_LINES) :
+            for r in range(BRICK_ROWS) :
+                x = self.min_width + (r * (self.brick_width + PIXELS_SPACING))
+                y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
+                self.bricks[l][r] = brick(x,y,self.brick_width,self.brick_height)
     
     def draw(self) :
-        for brick in self.bricks :
+        for brick in flatWallGenerator(self.bricks) :
             # USE BATCH ?
+            pprint.pprint(brick)
+            if(brick is None) :
+                print("celuilà")
+                continue
             brick.img.draw()
+            
 
     # return brick side colided : 0 none, 1 top_or_botom, 2 left_or_righ, 3 corner.
     def colide(self,x,dx,y,dy) -> int :
@@ -69,22 +87,26 @@ class wall :
            ) :
             return -1
         
-        for brick in self.bricks :
-            #check if something is crossed 
-            cross_left_in =    (x < brick.ax and dx > brick.ax)
-            cross_right_in =   (x > brick.bx and dx < brick.bx)
-            cross_bottom_in =  (y < brick.ay and dy > brick.ay)
-            cross_top_in =     (y > brick.by and dy < brick.by)
+        for l in range(BRICK_LINES):
+            for r in range(BRICK_ROWS):
+                brick = self.bricks[l][r]
+                if(brick is None):
+                    continue
+                #check if something is crossed 
+                cross_left_in =    (x < brick.ax and dx > brick.ax)
+                cross_right_in =   (x > brick.bx and dx < brick.bx)
+                cross_bottom_in =  (y < brick.ay and dy > brick.ay)
+                cross_top_in =     (y > brick.by and dy < brick.by)
 
-            inside_aera = (dx > brick.ax and 
-                           dx < brick.bx and
-                           dy > brick.ay and
-                           dy < brick.by)
-            
-            if(inside_aera):
-                brick.img.delete()
-                self.bricks.remove(brick)
-                return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
+                inside_aera = (dx > brick.ax and 
+                            dx < brick.bx and
+                            dy > brick.ay and
+                            dy < brick.by)
+                
+                if(inside_aera):
+                    brick.img.delete()
+                    self.bricks[l][r] = None
+                    return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
 
         return -1
 

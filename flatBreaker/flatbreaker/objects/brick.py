@@ -23,8 +23,3 @@ class brick :
         self.bx = x + width
         self.ay = y
         self.by = y + height
-
-    def takeDamage(self, hit_point)-> bool :
-        # return true if destroyed.
-        self.hp -= hit_point
-        return self.hp <= 0
