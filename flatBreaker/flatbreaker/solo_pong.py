@@ -16,8 +16,9 @@ window = pyglet.window.Window()
 window.set_fullscreen(True)
 blitzBall = ball(locked=True,window=window)
 theShip = boat(window)
-keys = keyboardControler(theShip, blitzBall, window)
 wall = wall(window)
+keys = keyboardControler(theShip, blitzBall, window, wall)
+
 wall.fill(40)
 
 

@@ -14,7 +14,9 @@ class brick :
     ax : int
     ay : int
     bx : int
-    by : int 
+    by : int
+    width : int
+    height : int
 
     def __init__(self, x,y,width = BRICK_WIDTH, height = BRICK_HEIGHT) -> None:
         self.hp = 100
@@ -23,3 +25,13 @@ class brick :
         self.bx = x + width
         self.ay = y
         self.by = y + height
+        self.width = width
+        self.height = height
+
+    def move(self, x,y) :
+        self.img.x = x
+        self.img.y = y
+        self.ax = x
+        self.bx = x + self.width
+        self.ay = y
+        self.by = y + self.height
