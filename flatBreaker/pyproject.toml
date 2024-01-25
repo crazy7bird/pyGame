@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "flatbreaker"
+version = "0.1.0"
+description = ""
+authors = ["crazybird <roy7alexandre@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyglet = "^2.0.10"
+
+[tool.poetry.scripts]
+snipet = "flatbreaker.snipet:run"
+alive = "flatbreaker.alive:run"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
