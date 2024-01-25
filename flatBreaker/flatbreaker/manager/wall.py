@@ -103,9 +103,6 @@ class wall :
            ) :
             return -1
         
-        # for l in range(BRICK_LINES):
-        #     for r in range(BRICK_ROWS):
-        #         brick = self.bricks[l][r]
         for brick,l,r in flatWallGenerator(self.bricks,True) :
             #check if something is crossed 
             cross_left_in =    (x < brick.ax and dx > brick.ax)
