@@ -27,6 +27,9 @@ class brick :
         self.by = y + height
         self.width = width
         self.height = height
+    
+    def __del__(self):
+        self.img.delete()
 
     def move(self, x,y, width = None, height = None) :
         if( width is not None):

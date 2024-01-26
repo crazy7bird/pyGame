@@ -5,9 +5,8 @@ import pprint
 #from brick import brick
 
 BRICK_LINES = 7
-#BRICK_ROWS = 21
 PIXELS_SPACING = 1
-PAST_BRICK_ROWS = 5
+PAST_BRICK_ROWS = 21
 
 def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
     for r in range(PAST_BRICK_ROWS):
@@ -65,17 +64,18 @@ class wallp :
     
     def updateRow(self):
         for brick,r,l in flatWallGenerator(self.bricks,True) :
-            x = self.min_width + (r * (self.brick_width[r] + PIXELS_SPACING))
+            #x = self.max_width - ((self.brick_width[r] + PIXELS_SPACING))
+            x = ((sum(self.brick_width[:r]) + r + PIXELS_SPACING))
             y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
             brick.move(x,y,width=self.brick_width[r])
 
     #Set new positions in the array
-    def worldForward(self,n_row:list = [None]*BRICK_LINES) -> list :
+    def worldForward(self,n_row:list = [None]*BRICK_LINES) -> None:
         #the first Row will go to the past zone.
         self.bricks.append(n_row)
-        retiredRow = self.bricks.pop(0)
+        for brick in self.bricks.pop(0):
+            del brick
         self.updateRow()
-        return retiredRow
     
     def draw(self) :
         for brick,_,_ in flatWallGenerator(self.bricks,True) :
