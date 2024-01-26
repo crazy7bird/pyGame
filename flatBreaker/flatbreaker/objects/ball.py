@@ -1,8 +1,6 @@
 import pyglet 
 from random import random 
-from pyglet.window import key
 from objects.boat import boatPosition
-from manager.wall import colideReport
 BALL_RADIUS = 5
 ALLY_COLOR = (25,255,150,255)
 ENEMY_COLOR = (140,87,140,255)

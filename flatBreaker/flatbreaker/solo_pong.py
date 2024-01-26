@@ -1,10 +1,6 @@
 import pyglet 
-from pyglet.window import key
-from dataclasses import dataclass
-from random import random
 from objects.ball import ball
 from objects.boat import boat
-from objects.brick import brick
 from manager.wall import wall
 from manager.input import keyboardControler
 

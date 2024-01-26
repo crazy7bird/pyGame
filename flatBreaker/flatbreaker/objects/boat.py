@@ -1,5 +1,4 @@
 import pyglet 
-from pyglet.window import key
 from dataclasses import dataclass
 
 ALLY_COLOR = (25,255,150,255)
