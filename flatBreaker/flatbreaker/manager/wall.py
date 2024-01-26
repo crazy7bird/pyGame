@@ -10,17 +10,15 @@ from random import random
 from objects.brick import brick
 import pprint
 
-BRICK_LINES = 7
-BRICK_ROWS = 21
+BRICK_LINES = 3
+BRICK_ROWS = 9
 MAX_BRICK = BRICK_LINES * BRICK_ROWS
 PIXELS_SPACING = 1
 
 def generateArray() -> list[list[brick]] :
-    el = [[]]
+    el = []
     for r in range(BRICK_ROWS) :
-        el.append([None])
-        for l in range(BRICK_LINES) :
-            el[r].append(None)
+        el.append([None]*BRICK_LINES)
     return el
 
 def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
@@ -77,26 +75,25 @@ class wall :
         self.max_width = window.width * 5/6
         self.brick_height = (( self.max_height - self.min_height - PIXELS_SPACING) / (BRICK_LINES + 1))
         self.brick_width =  (( self.max_width - self.min_width - PIXELS_SPACING ) /(BRICK_ROWS + 1))
-    
-    def brick_move(self,o_row,o_line,n_row,n_line):
-        x = self.min_width + (n_row * (self.brick_width + PIXELS_SPACING))
-        y = self.min_height + (n_line * (self.brick_height + PIXELS_SPACING))
-        self.bricks[o_row][o_line].move(x,y)
-    
-    def row_move(self,o_row):
-        for line,brick in enumerate(self.bricks[o_row]) :
-            if brick is not None :
-                self.brick_move(o_row,line,o_row - 1, line)
+      
+    def updateRow(self):
+        for brick,r,l in flatWallGenerator(self.bricks,True) :
+            x = self.min_width + (r * (self.brick_width + PIXELS_SPACING))
+            y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
+            brick.move(x,y)
 
+    #Set new positions in the array
+    def worldForward(self,n_row:list = [None]*BRICK_LINES) -> list :
+        #the first Row will go to the past zone.
+        self.bricks.append(n_row)
+        return self.bricks.pop(0)
+    
     def test_move_row(self) :
-        print("called")
-        for id, brick in enumerate(self.bricks[0]) :
-            if brick is not None :
-                self.bricks[0][id].img.delete()
-                self.bricks[0][id] = None
-        for row in range(BRICK_ROWS):
-            self.row_move(row)
-
+        tormv = self.worldForward()
+        for brick in tormv :
+            #delet them for now
+            brick.img.delete()
+        self.updateRow()
 
     def fill(self, n: int) :
         for r in range(BRICK_ROWS) :
