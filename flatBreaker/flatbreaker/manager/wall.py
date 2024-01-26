@@ -4,14 +4,11 @@
         - calculate colisions with brick
 """
 import pyglet 
-from pyglet.window import key
 from dataclasses import dataclass
-from random import random
 from objects.brick import brick
-import pprint
 
-BRICK_LINES = 3
-BRICK_ROWS = 9
+BRICK_LINES = 7
+BRICK_ROWS = 21
 MAX_BRICK = BRICK_LINES * BRICK_ROWS
 PIXELS_SPACING = 1
 
@@ -65,7 +62,6 @@ class wall :
     brick_width : int
 
     bricks : list[list[brick]]
-    positions : list[list[()]]
 
     def __init__(self, window : pyglet.window) -> None:
         self.bricks = generateArray()
@@ -86,14 +82,15 @@ class wall :
     def worldForward(self,n_row:list = [None]*BRICK_LINES) -> list :
         #the first Row will go to the past zone.
         self.bricks.append(n_row)
-        return self.bricks.pop(0)
+        retiredRow = self.bricks.pop(0)
+        self.updateRow()
+        return retiredRow
     
     def test_move_row(self) :
-        tormv = self.worldForward()
-        for brick in tormv :
+        for brick in self.worldForward() :
             #delet them for now
-            brick.img.delete()
-        self.updateRow()
+            if brick is not None :
+                brick.img.delete()
 
     def fill(self, n: int) :
         for r in range(BRICK_ROWS) :
