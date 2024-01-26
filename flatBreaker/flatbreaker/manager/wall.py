@@ -4,19 +4,12 @@
         - calculate colisions with brick
 """
 import pyglet 
-from dataclasses import dataclass
 from objects.brick import brick
+from objects.environementTravel import wallp
 
 BRICK_LINES = 7
 BRICK_ROWS = 21
-MAX_BRICK = BRICK_LINES * BRICK_ROWS
 PIXELS_SPACING = 1
-
-def generateArray() -> list[list[brick]] :
-    el = []
-    for r in range(BRICK_ROWS) :
-        el.append([None]*BRICK_LINES)
-    return el
 
 def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
     """flatWallGenerator is a python generator for parse every element on the 2D list of bricks
@@ -44,12 +37,6 @@ def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
 
             yield wall[r][l],r,l
 
-@dataclass 
-class colideReport :
-    top : bool
-    bottom : bool
-    left : bool
-    right : bool
 
 class wall :
     """_summary_ class wall to manages briks
@@ -60,17 +47,25 @@ class wall :
     max_width : int
     brick_height : int
     brick_width : int
+    wallPast : wallp
 
     bricks : list[list[brick]]
 
     def __init__(self, window : pyglet.window) -> None:
-        self.bricks = generateArray()
+        self.bricks = self.generateArray()
         self.min_height = window.height * 1/2
         self.max_height = window.height * 13/16
         self.min_width = window.width * 1/6
         self.max_width = window.width * 5/6
         self.brick_height = (( self.max_height - self.min_height - PIXELS_SPACING) / (BRICK_LINES + 1))
         self.brick_width =  (( self.max_width - self.min_width - PIXELS_SPACING ) /(BRICK_ROWS + 1))
+        self.wallPast = wallp(self.brick_height, window)
+
+    def generateArray(self) -> list[list[brick]] :
+        array = []
+        for _ in range(BRICK_ROWS) :
+            array.append([None]*BRICK_LINES)
+        return array
       
     def updateRow(self):
         for brick,r,l in flatWallGenerator(self.bricks,True) :
@@ -87,10 +82,11 @@ class wall :
         return retiredRow
     
     def test_move_row(self) :
-        for brick in self.worldForward() :
-            #delet them for now
-            if brick is not None :
-                brick.img.delete()
+        # for brick in self.worldForward() :
+        #     #delet them for now
+        #     if brick is not None :
+        #         brick.img.delete()
+        self.wallPast.worldForward(self.worldForward())
 
     def fill(self, n: int) :
         for r in range(BRICK_ROWS) :
@@ -102,6 +98,7 @@ class wall :
     def draw(self) :
         for brick,r,l in flatWallGenerator(self.bricks,True) :
             brick.img.draw()
+        self.wallPast.draw()
             
 
     # return brick side colided : 0 none, 1 top_or_botom, 2 left_or_righ, 3 corner.

@@ -28,7 +28,13 @@ class brick :
         self.width = width
         self.height = height
 
-    def move(self, x,y) :
+    def move(self, x,y, width = None, height = None) :
+        if( width is not None):
+            self.width = width
+            self.img.width = width
+        if ( height is not None):
+            self.height = height
+            self.img.height  = height
         self.img.x = x
         self.img.y = y
         self.ax = x
