@@ -14,6 +14,7 @@ class brick :
     by : int
     width : int
     height : int
+    listOfObjects : list
 
     def __init__(self, x,y,width = BRICK_WIDTH, height = BRICK_HEIGHT) -> None:
         self.img = pyglet.shapes.Rectangle(x,y,width,height, color = ALLY_COLOR)

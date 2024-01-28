@@ -5,7 +5,9 @@
 """
 import pyglet 
 from objects.brick import brick
-from objects.environementTravel import wallp
+from objects.itemList import itemList
+from objects.drop import coin
+
 import random
 
 BRICK_LINES = 7
@@ -24,7 +26,9 @@ class wall :
 
     bricks : list[list[brick]]
 
-    def __init__(self, window : pyglet.window) -> None:
+    items : itemList
+
+    def __init__(self, window : pyglet.window, listOfObjects : itemList) -> None:
         self.bricks = self.generateArray()
         self.min_height = window.height * 1/2
         self.max_height = window.height * 13/16
@@ -32,6 +36,8 @@ class wall :
         self.max_width = window.width * 5/6
         self.brick_height = (( self.max_height - self.min_height - PIXELS_SPACING) / (BRICK_LINES + 1))
         self.brick_width =  (( self.max_width - self.min_width - PIXELS_SPACING ) /(BRICK_ROWS + 1))
+
+        self.items = listOfObjects
 
     def generateArray(self) -> list[list[brick]] :
         array = []
@@ -124,7 +130,12 @@ class wall :
                         dy < brick.by)
             
             if(inside_aera):
+                coinX = (brick.ax + brick.bx) / 2
+                coinY = (brick.by + brick.ay) / 2
+                coinloc = coin.coin(coinX,coinY)
+                self.items.add(coinloc)
                 del brick #Brutal destroy the brick
+                
                 self.bricks[r][l] = None
                 return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
 
