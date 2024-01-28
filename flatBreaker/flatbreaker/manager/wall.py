@@ -6,6 +6,7 @@
 import pyglet 
 from objects.brick import brick
 from objects.environementTravel import wallp
+import random
 
 BRICK_LINES = 7
 BRICK_ROWS = 21
@@ -20,7 +21,6 @@ class wall :
     max_width : int
     brick_height : int
     brick_width : int
-    wallPast : wallp
 
     bricks : list[list[brick]]
 
@@ -32,7 +32,6 @@ class wall :
         self.max_width = window.width * 5/6
         self.brick_height = (( self.max_height - self.min_height - PIXELS_SPACING) / (BRICK_LINES + 1))
         self.brick_width =  (( self.max_width - self.min_width - PIXELS_SPACING ) /(BRICK_ROWS + 1))
-        self.wallPast = wallp(self.brick_height, window)
 
     def generateArray(self) -> list[list[brick]] :
         array = []
@@ -54,6 +53,22 @@ class wall :
                     pass
 
                 yield self.bricks[r][l],r,l
+
+    def addRow(self) -> list[brick] :
+        """In the future this function call a file/map,
+           for generating brick wall.
+        """
+        row = []
+        for l in range(BRICK_ROWS) :
+            if (random.random() > 0.5) :
+                x = self.min_width + ((BRICK_ROWS - 1) * (self.brick_width + PIXELS_SPACING))
+                y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
+                row.append(brick(x,y,self.brick_width,self.brick_height))
+            else :
+                row.append(None)
+        return row
+        
+
       
     def updateRow(self):
         for brick,r,l in self.flatWallGenerator(True) :
@@ -70,11 +85,10 @@ class wall :
         return retiredRow
     
     def test_move_row(self) :
-        # for brick in self.worldForward() :
-        #     #delet them for now
-        #     if brick is not None :
-        #         brick.img.delete()
-        self.wallPast.worldForward(self.worldForward())
+         for brick in self.worldForward(self.addRow()) :
+             #delet them for now
+             if brick is not None :
+                 brick.img.delete()
 
     def fill(self, n: int) :
         for r in range(BRICK_ROWS) :
@@ -86,7 +100,6 @@ class wall :
     def draw(self) :
         for brick,r,l in self.flatWallGenerator(True) :
             brick.draw()
-        self.wallPast.draw()
             
 
     # return brick side colided : 0 none, 1 top_or_botom, 2 left_or_righ, 3 corner.

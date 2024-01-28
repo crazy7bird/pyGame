@@ -7,6 +7,7 @@ import pprint
 BRICK_LINES = 7
 PIXELS_SPACING = 1
 PAST_BRICK_ROWS = 21
+PAST_BRICK_LINES = 7
 
 def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
     for r in range(PAST_BRICK_ROWS):
@@ -20,7 +21,6 @@ def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
             elif wall[r][l] is None :
                 #FillEmptyAll is False and brick is empty so return it
                 pass
-
             yield wall[r][l],r,l
 
 class wallp :
@@ -29,7 +29,7 @@ class wallp :
     max_height : int
     min_width : int
     max_width : int
-    brick_height : int
+    brick_height : list[int]
     brick_width : list[int]
 
     bricks : list[list[brick]]
@@ -42,7 +42,7 @@ class wallp :
         self.min_width = 0 
         self.max_width = window.width * 1/6        
 
-        self.brick_height = brick_height
+        self.brick_height = self.generateBrickHeight()
         self.brick_width = self.generateBrickWidth()
         self.bricks = self.generateArray()
 
@@ -62,12 +62,24 @@ class wallp :
         brickWidth = [size * totalSize for size in brickWidth]
         return brickWidth
     
+    def generateBrickHeight(self) -> list[int]:
+        brickHeight = []
+        for i in range(PAST_BRICK_LINES + 1) :
+            baseBrickHeight = (i+1)*2
+            brickHeight.append(baseBrickHeight)
+        totalSize = sum(brickHeight)
+        totalSize = (self.max_height - self.min_height) / totalSize # Give a coeff for resize width.
+        brickHeight = [size * totalSize for size in brickHeight]
+        return brickHeight
+    
     def updateRow(self):
+        #@note and lines…
         for brick,r,l in flatWallGenerator(self.bricks,True) :
             #x = self.max_width - ((self.brick_width[r] + PIXELS_SPACING))
             x = ((sum(self.brick_width[:r]) + r + PIXELS_SPACING))
-            y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
-            brick.move(x,y,width=self.brick_width[r])
+            y = ((sum(self.brick_height[:l]) + l + PIXELS_SPACING))
+            brick.move(x,y,width=self.brick_width[r],height=self.brick_height[l])
+
 
     #Set new positions in the array
     def worldForward(self,n_row:list = [None]*BRICK_LINES) -> None:
