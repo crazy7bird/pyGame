@@ -8,20 +8,23 @@ ENEMY_COLOR = (140,87,140,255)
 class boatPosition :
     xMin : int
     xMax : int
-    height : int
+    yMin : int
+    yMax : int
 
 class boat :
     img : pyglet
     size : int
+    minY : int
     height : int
     window_max_x : int
     speed : int #px/sec
 
     def __init__(self, window) -> None:
         self.window_max_x = window.width
+        self.minY = 32
         self.height = 10
         self.size = 200
-        self.img = pyglet.shapes.Rectangle(window.width/2, 0, self.size, self.height, color = ALLY_COLOR)
+        self.img = pyglet.shapes.Rectangle(window.width/2, self.minY, self.size, self.height, color = ALLY_COLOR)
         self.speed = 1000
 
     def moveRight(self, dt) -> None :
@@ -35,7 +38,7 @@ class boat :
             self.img.x = 0
     
     def getPosition(self) -> boatPosition :
-        return boatPosition(self.img.x, self.img.x +self.size, self.height)
+        return boatPosition(self.img.x, self.img.x +self.size, self.minY, self.minY + self.height)
     
     def draw(self) -> None :
         self.img.draw()

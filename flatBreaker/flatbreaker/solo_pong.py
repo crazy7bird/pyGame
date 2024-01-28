@@ -28,7 +28,7 @@ def on_draw():
 def update(dt):
     keys.update(dt)
     #theShip.update(keys,dt)
-    blitzBall.update(theShip.getPosition(),wall,keys,dt)
+    blitzBall.update(theShip.getPosition(),wall,dt)
     if blitzBall.isLost() :
         print("LOST")
         #del(blitzBall)

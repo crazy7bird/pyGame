@@ -57,7 +57,7 @@ class ball:
         bounce = self.img.x - boat.xMin
         bounce = ((bounce - ((boat_size)/2)) / boat_size) * self.y_speed
         self.x_speed += bounce
-        self.dy = boat.height
+        self.dy = boat.yMax
     
     def calculateWindowColide(self, boat : boatPosition) -> bool :
         if(self.dx > self.windowWidth) :
@@ -70,21 +70,19 @@ class ball:
         if(self.dy > self.windowHeight) :
             self.dy = self.windowHeight - (self.dy - self.windowHeight)
             self.y_speed = - self.y_speed
-        elif (self.dy <= boat.height and self.img.y >0) :
+        elif (self.dy <= boat.yMax and self.img.y >boat.yMin) :
             if( (self.dx >= boat.xMin) and 
                 (self.dx <= boat.xMax)
             ) :
                 self.boatBounceControl(boat)
             else :
-                #@note Ball is lost.
-                self.dy = -10
                 self.lost = True
     
-    def update(self,boat : boatPosition,wall,keys,dt) -> None:
+    def update(self,boat : boatPosition,wall,dt) -> None:
         # If the ball is locked on the boat
         if(self.locked) :
             self.img.x = ( boat.xMin + boat.xMax ) / 2
-            self.img.y = boat.height + (self.img.radius/2)
+            self.img.y = boat.yMax + (self.img.radius/2)
 
         # Update next position.
         self.dx = self.img.x + (self.x_speed * dt)
