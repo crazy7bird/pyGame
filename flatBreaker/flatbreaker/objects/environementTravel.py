@@ -79,7 +79,7 @@ class wallp :
     
     def draw(self) :
         for brick,_,_ in flatWallGenerator(self.bricks,True) :
-            brick.img.draw()
+            brick.draw()
 
 
 if __name__ == "__main__" :

@@ -36,3 +36,6 @@ class boat :
     
     def getPosition(self) -> boatPosition :
         return boatPosition(self.img.x, self.img.x +self.size, self.height)
+    
+    def draw(self) -> None :
+        self.img.draw()

@@ -21,14 +21,18 @@ wall.fill(40)
 @window.event
 def on_draw():
     window.clear()
-    blitzBall.img.draw()
-    theShip.img.draw()
+    blitzBall.draw()
+    theShip.draw()
     wall.draw()
 
 def update(dt):
     keys.update(dt)
     #theShip.update(keys,dt)
     blitzBall.update(theShip.getPosition(),wall,keys,dt)
+    if blitzBall.isLost() :
+        print("LOST")
+        #del(blitzBall)
+        exit()
 
 # hiding mouse
 window.set_mouse_visible(False)

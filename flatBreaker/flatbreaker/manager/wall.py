@@ -11,33 +11,6 @@ BRICK_LINES = 7
 BRICK_ROWS = 21
 PIXELS_SPACING = 1
 
-def flatWallGenerator(wall : list[list[brick]],FillEmptyAll = None):
-    """flatWallGenerator is a python generator for parse every element on the 2D list of bricks
-
-    Args:
-        wall (list[list[brick]]): 2D list of bricks 
-        FillEmptyAll (_type_, optional): True return only setted brick, False return only empty brick, None return all. Defaults to None.
-
-    Yields:
-        brick : The next brick that should be treated.
-        r : row number
-        l : line number
-    """
-    for r in range(BRICK_ROWS):
-        for l in range(BRICK_LINES):
-            if FillEmptyAll is None :
-                #return everything
-                pass
-            elif FillEmptyAll and wall[r][l] is None :
-                #FillEmptyAll is True so brick should be Fill for return it
-                continue
-            elif wall[r][l] is None :
-                #FillEmptyAll is False and brick is empty so return it
-                pass
-
-            yield wall[r][l],r,l
-
-
 class wall :
     """_summary_ class wall to manages briks
     """
@@ -66,9 +39,24 @@ class wall :
         for _ in range(BRICK_ROWS) :
             array.append([None]*BRICK_LINES)
         return array
+    
+    def flatWallGenerator(self,FillEmptyAll = None):
+        for r in range(BRICK_ROWS):
+            for l in range(BRICK_LINES):
+                if FillEmptyAll is None :
+                    #return everything
+                    pass
+                elif FillEmptyAll and self.bricks[r][l] is None :
+                    #FillEmptyAll is True so brick should be Fill for return it
+                    continue
+                elif self.bricks[r][l] is None :
+                    #FillEmptyAll is False and brick is empty so return it
+                    pass
+
+                yield self.bricks[r][l],r,l
       
     def updateRow(self):
-        for brick,r,l in flatWallGenerator(self.bricks,True) :
+        for brick,r,l in self.flatWallGenerator(True) :
             x = self.min_width + (r * (self.brick_width + PIXELS_SPACING))
             y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
             brick.move(x,y)
@@ -96,8 +84,8 @@ class wall :
                 self.bricks[r][l] = brick(x,y,self.brick_width,self.brick_height)
     
     def draw(self) :
-        for brick,r,l in flatWallGenerator(self.bricks,True) :
-            brick.img.draw()
+        for brick,r,l in self.flatWallGenerator(True) :
+            brick.draw()
         self.wallPast.draw()
             
 
@@ -110,7 +98,7 @@ class wall :
            ) :
             return -1
         
-        for brick,r,l in flatWallGenerator(self.bricks,True) :
+        for brick,r,l in self.flatWallGenerator(True) :
             #check if something is crossed 
             cross_left_in =    (x < brick.ax and dx > brick.ax)
             cross_right_in =   (x > brick.bx and dx < brick.bx)
@@ -123,7 +111,7 @@ class wall :
                         dy < brick.by)
             
             if(inside_aera):
-                brick.img.delete()
+                del brick #Brutal destroy the brick
                 self.bricks[r][l] = None
                 return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
 

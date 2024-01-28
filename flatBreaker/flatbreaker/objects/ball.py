@@ -7,7 +7,7 @@ ENEMY_COLOR = (140,87,140,255)
 
 class ball:
     locked : bool
-    ball_lost : bool
+    lost : bool
     x_speed : int
     y_speed : int
     img : pyglet.shapes
@@ -21,15 +21,24 @@ class ball:
         self.x_speed = -speed + (random() * 2 * speed)
         self.y_speed = speed
         self.img = pyglet.shapes.Circle(x,y,BALL_RADIUS, color=ALLY_COLOR)
-        self.ball_lost = False
+        self.lost = False
         self.dx = 0
         self.dy = 0
         self.radius = radius
         self.windowWidth = window.width
         self.windowHeight = window.height
 
+    def __del__(self) :
+        self.img.delete()
+    
+    def draw(self) -> None :
+        self.img.draw()
+
     def unlock(self) -> None: 
         self.locked = False
+    
+    def isLost(self) -> bool :
+        return self.lost
 
     def calculateBrickcolide(self,wall) -> bool :
         brick_colide = wall.colide(self.img.x, self.dx, self.img.y, self.dy)
@@ -69,19 +78,14 @@ class ball:
             else :
                 #@note Ball is lost.
                 self.dy = -10
-                self.ball_lost = True
+                self.lost = True
     
     def update(self,boat : boatPosition,wall,keys,dt) -> None:
         # If the ball is locked on the boat
         if(self.locked) :
             self.img.x = ( boat.xMin + boat.xMax ) / 2
             self.img.y = boat.height + (self.img.radius/2)
-            #@note remove all controls to a controler class ?
-            # if not keys[key.SPACE]:                        #
-            #     return                                     #
-            # else :                                         #
-            #     self.locked = False                        #
-            # ################################################
+
         # Update next position.
         self.dx = self.img.x + (self.x_speed * dt)
         self.dy = self.img.y + (self.y_speed * dt)
