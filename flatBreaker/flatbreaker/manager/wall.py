@@ -26,9 +26,8 @@ class wall :
 
     bricks : list[list[brick]]
 
-    items : itemList
 
-    def __init__(self, window : pyglet.window, listOfObjects : itemList) -> None:
+    def __init__(self, window : pyglet.window) -> None:
         self.bricks = self.generateArray()
         self.min_height = window.height * 1/2
         self.max_height = window.height * 13/16
@@ -37,7 +36,6 @@ class wall :
         self.brick_height = (( self.max_height - self.min_height - PIXELS_SPACING) / (BRICK_LINES + 1))
         self.brick_width =  (( self.max_width - self.min_width - PIXELS_SPACING ) /(BRICK_ROWS + 1))
 
-        self.items = listOfObjects
 
     def generateArray(self) -> list[list[brick]] :
         array = []
@@ -108,36 +106,36 @@ class wall :
             brick.draw()
             
 
-    # return brick side colided : 0 none, 1 top_or_botom, 2 left_or_righ, 3 corner.
-    def colide(self,x,dx,y,dy) -> int :
-        #@note ball radius is not treated.
-        #case not even in the wall aera
-        if((dy < self.min_height) or
-           (dy > self.max_height)
-           ) :
-            return -1
+    # # return brick side colided : 0 none, 1 top_or_botom, 2 left_or_righ, 3 corner.
+    # def colide(self,x,dx,y,dy) -> int :
+    #     #@note ball radius is not treated.
+    #     #case not even in the wall aera
+    #     if((dy < self.min_height) or
+    #        (dy > self.max_height)
+    #        ) :
+    #         return -1
         
-        for brick,r,l in self.flatWallGenerator(True) :
-            #check if something is crossed 
-            cross_left_in =    (x < brick.ax and dx > brick.ax)
-            cross_right_in =   (x > brick.bx and dx < brick.bx)
-            cross_bottom_in =  (y < brick.ay and dy > brick.ay)
-            cross_top_in =     (y > brick.by and dy < brick.by)
+    #     for brick,r,l in self.flatWallGenerator(True) :
+    #         #check if something is crossed 
+    #         cross_left_in =    (x < brick.ax and dx > brick.ax)
+    #         cross_right_in =   (x > brick.bx and dx < brick.bx)
+    #         cross_bottom_in =  (y < brick.ay and dy > brick.ay)
+    #         cross_top_in =     (y > brick.by and dy < brick.by)
 
-            inside_aera = (dx > brick.ax and 
-                        dx < brick.bx and
-                        dy > brick.ay and
-                        dy < brick.by)
+    #         inside_aera = (dx > brick.ax and 
+    #                     dx < brick.bx and
+    #                     dy > brick.ay and
+    #                     dy < brick.by)
             
-            if(inside_aera):
-                coinX = (brick.ax + brick.bx) / 2
-                coinY = (brick.by + brick.ay) / 2
-                coinloc = coin.coin(coinX,coinY)
-                self.items.add(coinloc)
-                del brick #Brutal destroy the brick
+    #         if(inside_aera):
+    #             coinX = (brick.ax + brick.bx) / 2
+    #             coinY = (brick.by + brick.ay) / 2
+    #             coinloc = coin.coin(coinX,coinY)
+    #             self.items.add(coinloc)
+    #             del brick #Brutal destroy the brick
                 
-                self.bricks[r][l] = None
-                return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
+    #             self.bricks[r][l] = None
+    #             return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
 
-        return -1
+    #     return -1
 

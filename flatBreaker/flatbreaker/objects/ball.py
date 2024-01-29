@@ -13,10 +13,8 @@ class ball:
     img : pyglet.shapes
     dx : int #used to calcul next position.
     dy : int
-    windowWidth : int
-    windowHeight : int
 
-    def __init__(self,window :pyglet.window,x = 0, y = 0, speed = 400,radius = BALL_RADIUS,locked = False) -> None:
+    def __init__(self,x = 0, y = 0, speed = 400,radius = BALL_RADIUS,locked = False) -> None:
         self.locked = locked
         self.x_speed = (-speed*2) + (random() * 4 * speed)
         self.y_speed = speed
@@ -25,8 +23,6 @@ class ball:
         self.dx = 0
         self.dy = 0
         self.radius = radius
-        self.windowWidth = window.width
-        self.windowHeight = window.height
 
     def __del__(self) :
         self.img.delete()
@@ -39,62 +35,3 @@ class ball:
     
     def isFinish(self) -> bool :
         return self.lost
-
-    def calculateBrickcolide(self,wall) -> bool :
-        brick_colide = wall.colide(self.img.x, self.dx, self.img.y, self.dy)
-        if(brick_colide>0) :
-            #do ite
-            if ( brick_colide == 1 or brick_colide == 3) :
-                self.x_speed =-self.x_speed
-            if (brick_colide == 2 or brick_colide == 3) :
-                self.y_speed =-self.y_speed
-            return True
-        return False
-    
-    def boatBounceControl(self, boat : boatPosition) -> None :
-        self.y_speed = abs(self.y_speed) # Mystical to be sure it goes up.
-        boat_size = boat.xMax - boat.xMin
-        bounce = self.img.x - boat.xMin
-        bounce = ((bounce - ((boat_size)/2)) / boat_size) * self.y_speed
-        self.x_speed += bounce
-        self.dy = boat.yMax
-    
-    def calculateWindowColide(self, boat : boatPosition) -> bool :
-        if(self.dx > self.windowWidth) :
-            self.dx = self.windowWidth - (self.dx - self.windowWidth)
-            self.x_speed = - self.x_speed
-        elif (self.dx < 0) :
-            self.dx = -self.dx
-            self.x_speed = - self.x_speed
-
-        if(self.dy > self.windowHeight) :
-            self.dy = self.windowHeight - (self.dy - self.windowHeight)
-            self.y_speed = - self.y_speed
-        elif (self.dy <= boat.yMax and self.img.y >boat.yMin) :
-            if( (self.dx >= boat.xMin) and 
-                (self.dx <= boat.xMax)
-            ) :
-                self.boatBounceControl(boat)
-            else :
-                self.lost = True
-    
-    def update(self,boat : boatPosition,wall,dt) -> None:
-        # If the ball is locked on the boat
-        if(self.locked) :
-            self.img.x = ( boat.xMin + boat.xMax ) / 2
-            self.img.y = boat.yMax + (self.img.radius/2)
-            return
-
-        # Update next position.
-        self.dx = self.img.x + (self.x_speed * dt)
-        self.dy = self.img.y + (self.y_speed * dt)
-
-        # Calculate colision with a brick
-        if self.calculateBrickcolide(wall) :
-            return #we found an object ball colide.
-
-        # Calculate colision with border screen and boat.
-        self.calculateWindowColide(boat)
-
-        self.img.x = self.dx
-        self.img.y = self.dy
