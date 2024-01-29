@@ -34,7 +34,7 @@ def update(dt):
     keys.update(dt)
     #theShip.update(keys,dt)
     blitzBall.update(theShip.getPosition(),wall,dt)
-    if blitzBall.isLost() :
+    if blitzBall.isFinish() :
         print("LOST")
         #del(blitzBall)
         exit()

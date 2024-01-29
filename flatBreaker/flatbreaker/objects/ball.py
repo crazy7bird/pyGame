@@ -18,7 +18,7 @@ class ball:
 
     def __init__(self,window :pyglet.window,x = 0, y = 0, speed = 400,radius = BALL_RADIUS,locked = False) -> None:
         self.locked = locked
-        self.x_speed = -speed + (random() * 2 * speed)
+        self.x_speed = (-speed*2) + (random() * 4 * speed)
         self.y_speed = speed
         self.img = pyglet.shapes.Circle(x,y,BALL_RADIUS, color=ALLY_COLOR)
         self.lost = False
@@ -37,7 +37,7 @@ class ball:
     def unlock(self) -> None: 
         self.locked = False
     
-    def isLost(self) -> bool :
+    def isFinish(self) -> bool :
         return self.lost
 
     def calculateBrickcolide(self,wall) -> bool :
@@ -83,6 +83,7 @@ class ball:
         if(self.locked) :
             self.img.x = ( boat.xMin + boat.xMax ) / 2
             self.img.y = boat.yMax + (self.img.radius/2)
+            return
 
         # Update next position.
         self.dx = self.img.x + (self.x_speed * dt)

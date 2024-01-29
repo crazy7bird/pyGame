@@ -94,7 +94,7 @@ class wall :
          for brick in self.worldForward(self.addRow()) :
              #delet them for now
              if brick is not None :
-                 brick.img.delete()
+                del brick
 
     def fill(self, n: int) :
         for r in range(BRICK_ROWS) :
