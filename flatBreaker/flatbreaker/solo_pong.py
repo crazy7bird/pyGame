@@ -1,10 +1,8 @@
 import pyglet 
-from objects.ball import ball
 from objects.boat import boat
 from manager.wall import wall
 from manager.input import keyboardControler
-#from objects.itemList import itemList
-from manager.colider import colider
+from manager.colider.colider import colider
 
 ALLY_COLOR = (25,255,150,255)
 ENEMY_COLOR = (140,87,140,255)

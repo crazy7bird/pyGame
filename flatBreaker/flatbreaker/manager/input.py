@@ -3,7 +3,7 @@ from pyglet.window import key
 from objects.ball import ball
 from objects.boat import boat
 from manager.wall import wall
-from manager.colider import colider
+from manager.colider.colider import colider
 
 """Get Keyboard inputs
 """
@@ -20,8 +20,7 @@ class keyboardControler :
 
     def update(self,dt) -> None :
         if self.keys[key.SPACE]:
-            for ball in self.colider.balls :
-                ball.unlock()
+            self.colider.unlockBalls()
         if self.keys[key.A]:
             self.boat.moveLeft(dt)
         if self.keys[key.I] :

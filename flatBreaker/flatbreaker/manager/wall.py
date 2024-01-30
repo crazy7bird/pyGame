@@ -5,8 +5,6 @@
 """
 import pyglet 
 from objects.brick import brick
-from objects.itemList import itemList
-from objects.drop import coin
 
 import random
 

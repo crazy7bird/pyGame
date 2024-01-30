@@ -1,16 +1,12 @@
-from manager.wall import wall
+""" functions colides and results for balllls 
+"""
 from objects.ball import ball
 from objects.boat import boat
-from objects.brick import brick
-from objects.drop.drop import *
+from manager.wall import wall
 import pyglet
 
-class colider :
-    wall : wall
-    balls : list[ball]
-    drops : list[drop]
-    boat : boat
-    
+class ballColider :
+    balls : list [ball]
 
     def __init__(self,wall : wall, boat : boat, window : pyglet.window) -> None:
         self.balls = [] #@note player gives sent ball here.
@@ -89,7 +85,8 @@ class colider :
                 return True
         return False
     
-    def updateBalls(self) -> None:
+    def updateBalls(self, dt) -> None:
+        self.dt = dt
         for ball in self.balls :
             #Test if locked
             if ball.locked :
@@ -109,14 +106,7 @@ class colider :
             ball.img.y = ball.dy
             return 
         
-    def update(self,dt) -> None :
-        self.dt = dt
-        self.updateBalls()
-
     def draw(self) -> None :
         for ball in self.balls :
             ball.draw()
-
-
-
 

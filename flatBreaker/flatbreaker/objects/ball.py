@@ -16,7 +16,7 @@ class ball:
 
     def __init__(self,x = 0, y = 0, speed = 400,radius = BALL_RADIUS,locked = False) -> None:
         self.locked = locked
-        self.x_speed = (-speed*2) + (random() * 4 * speed)
+        self.x_speed = (-speed*1.5) + (random() * 3 * speed)
         self.y_speed = speed
         self.img = pyglet.shapes.Circle(x,y,BALL_RADIUS, color=ALLY_COLOR)
         self.lost = False
