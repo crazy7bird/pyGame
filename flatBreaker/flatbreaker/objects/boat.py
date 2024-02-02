@@ -27,6 +27,10 @@ class boat :
         self.img = pyglet.shapes.Rectangle(window.width/2, self.minY, self.size, self.height, color = ALLY_COLOR)
         self.speed = 1000
 
+    def sizeUpdate(self, size : int) -> None :
+        self.size += size
+        self.img.width = self.size
+
     def moveRight(self, dt) -> None :
         self.img.x += self.speed * dt
         if(self.img.x + self.size > self.window_max_x) :

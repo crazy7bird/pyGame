@@ -100,40 +100,5 @@ class wall :
                 self.bricks[r][l] = brick(x,y,self.brick_width,self.brick_height)
     
     def draw(self) :
-        for brick,r,l in self.flatWallGenerator(True) :
+        for brick,_,_ in self.flatWallGenerator(True) :
             brick.draw()
-            
-
-    # # return brick side colided : 0 none, 1 top_or_botom, 2 left_or_righ, 3 corner.
-    # def colide(self,x,dx,y,dy) -> int :
-    #     #@note ball radius is not treated.
-    #     #case not even in the wall aera
-    #     if((dy < self.min_height) or
-    #        (dy > self.max_height)
-    #        ) :
-    #         return -1
-        
-    #     for brick,r,l in self.flatWallGenerator(True) :
-    #         #check if something is crossed 
-    #         cross_left_in =    (x < brick.ax and dx > brick.ax)
-    #         cross_right_in =   (x > brick.bx and dx < brick.bx)
-    #         cross_bottom_in =  (y < brick.ay and dy > brick.ay)
-    #         cross_top_in =     (y > brick.by and dy < brick.by)
-
-    #         inside_aera = (dx > brick.ax and 
-    #                     dx < brick.bx and
-    #                     dy > brick.ay and
-    #                     dy < brick.by)
-            
-    #         if(inside_aera):
-    #             coinX = (brick.ax + brick.bx) / 2
-    #             coinY = (brick.by + brick.ay) / 2
-    #             coinloc = coin.coin(coinX,coinY)
-    #             self.items.add(coinloc)
-    #             del brick #Brutal destroy the brick
-                
-    #             self.bricks[r][l] = None
-    #             return (cross_top_in or cross_bottom_in)*2 + (cross_left_in or cross_right_in) # brick found.
-
-    #     return -1
-

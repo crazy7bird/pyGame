@@ -4,16 +4,17 @@ from objects.ball import ball
 from objects.boat import boat
 from manager.wall import wall
 import pyglet
+from manager.colider.dropColider import dropColider
 
 class ballColider :
     balls : list [ball]
 
-    def __init__(self,wall : wall, boat : boat, window : pyglet.window) -> None:
+    def __init__(self,wall : wall, boat : boat, dropColider : dropColider, window : pyglet.window) -> None:
         self.balls = [] #@note player gives sent ball here.
-        self.drops = [] #@note drops are generated in the colider.
         self.wall = wall
         self.boat = boat
         self.window = window
+        self.dropColider = dropColider
         self.dt = 0
 
     def creatBall(self) -> None :
@@ -71,8 +72,9 @@ class ballColider :
                         ball.dy < brick.by)
             
             if(inside_aera):
-                # coinX = (brick.ax + brick.bx) / 2
-                # coinY = (brick.by + brick.ay) / 2
+                dropX = (brick.ax + brick.bx) / 2
+                dropY = (brick.by + brick.ay) / 2
+                self.dropColider.creatCoin(dropX,dropY)
                 # coinloc = coin.coin(coinX,coinY)
                 # self.items.add(coinloc)
                 del brick #Brutal destroy the brick
@@ -84,6 +86,7 @@ class ballColider :
                     ball.x_speed = -ball.x_speed
                 return True
         return False
+    
     
     def updateBalls(self, dt) -> None:
         self.dt = dt

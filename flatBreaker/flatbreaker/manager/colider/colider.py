@@ -5,6 +5,7 @@ from objects.brick import brick
 from objects.drop.drop import *
 import pyglet
 from manager.colider.ballColider import ballColider
+from manager.colider.dropColider import dropColider
 
 class colider :
     wall : wall
@@ -19,7 +20,8 @@ class colider :
         self.boat = boat
         self.window = window
         self.dt = 0
-        self.ballColider = ballColider(wall,boat,window)
+        self.dropColider = dropColider(boat)
+        self.ballColider = ballColider(wall,boat,self.dropColider,window)
 
     def creatBall(self) -> None :
         self.ballColider.creatBall()
@@ -31,9 +33,11 @@ class colider :
     def update(self,dt) -> None :
         self.dt = dt
         self.ballColider.updateBalls(self.dt)
+        self.dropColider.updateDrops(self.dt)
 
     def draw(self) -> None :
         self.ballColider.draw()
+        self.dropColider.draw()
 
 
 
