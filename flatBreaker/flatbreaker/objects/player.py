@@ -9,7 +9,8 @@ class player :
 
     def getCoins (self) -> int :
         return self.coins
-    def addCoins(self, coins : int) -> int :
+    
+    def addCoins(self, coins : int) -> None :
         if(coins > 0) :
             self.coins += coins
         else :
@@ -21,7 +22,7 @@ class player :
     def getBalls(self) -> int :
         return self.balls
     
-    def addBalls(self,ball : int) -> int :
+    def addBalls(self,ball : int) -> None :
         if(ball > 0) :
             self.balls += ball
         else :
@@ -29,3 +30,15 @@ class player :
             if(ball >= 0) :
                 self.balls = ball
         return
+    
+    def getLife(self) -> int :
+        return self.life
+    
+    def addLife(self,life : int) -> None :
+        if(life > 0) :
+            self.life += life
+        else :
+            self.life += life
+            if(self.life < 0) :
+                pass
+                #@ GAMEOVER

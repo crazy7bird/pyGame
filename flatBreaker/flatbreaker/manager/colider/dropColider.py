@@ -2,6 +2,7 @@
 """
 from objects.drop.drop import drop
 from objects.drop.coin import coin
+from objects.drop.life import life
 
 
 class dropColider :
@@ -16,10 +17,16 @@ class dropColider :
 
     def creatCoin(self,x,y) -> None :
         self.drops.append(coin(x,y))
+    
+    def creatLife(self,x,y) -> None :
+        self.drops.append(life(x,y))
 
     def draw(self) -> None :
         for drop in self.drops :
             drop.draw()
+    
+    def applyBonnus(self,drop) -> None :
+        pass
 
     def dropColideBoat(self,drop) -> bool :
         bposition = self.boat.getPosition()

@@ -4,6 +4,7 @@ from objects.ball import ball
 from objects.boat import boat
 from manager.wall import wall
 import pyglet
+import random
 from manager.colider.dropColider import dropColider
 
 class ballColider :
@@ -74,10 +75,12 @@ class ballColider :
             if(inside_aera):
                 dropX = (brick.ax + brick.bx) / 2
                 dropY = (brick.by + brick.ay) / 2
-                self.dropColider.creatCoin(dropX,dropY)
-                # coinloc = coin.coin(coinX,coinY)
-                # self.items.add(coinloc)
-                del brick #Brutal destroy the brick
+                #self.dropColider.creatCoin(dropX,dropY)
+                if(random.random()>0.5):
+                    self.dropColider.creatLife(dropX,dropY)
+                else :
+                    self.dropColider.creatCoin(dropX,dropY)
+                del brick
                 
                 self.wall.bricks[r][l] = None
                 if(cross_top_in or cross_bottom_in) :
