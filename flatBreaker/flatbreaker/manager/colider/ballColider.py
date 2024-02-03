@@ -95,7 +95,7 @@ class ballColider :
             if ball.locked :
                 ball.img.x = ( self.boat.img.x + (self.boat.img.x +self.boat.size) ) / 2
                 ball.img.y = (self.boat.minY + self.boat.height) + (ball.img.radius/2)
-                return
+                continue
             # Update next position.
             ball.dx = ball.img.x + (ball.x_speed * self.dt)
             ball.dy = ball.img.y + (ball.y_speed * self.dt)
@@ -107,7 +107,7 @@ class ballColider :
                 self.updateBallsBrickColide(ball)
             ball.img.x = ball.dx
             ball.img.y = ball.dy
-            return 
+            continue 
         
     def draw(self) -> None :
         for ball in self.balls :

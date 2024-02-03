@@ -3,6 +3,7 @@ from objects.boat import boat
 from manager.wall import wall
 from manager.input import keyboardControler
 from manager.colider.colider import colider
+from objects.player import player
 
 ALLY_COLOR = (25,255,150,255)
 ENEMY_COLOR = (140,87,140,255)
@@ -12,11 +13,12 @@ window = pyglet.window.Window()
 
 window.set_fullscreen(True)
 
+player = player()
 theShip = boat(window)
 wall = wall(window)
 colider = colider(wall,theShip,window)
 colider.creatBall()
-keys = keyboardControler(theShip, colider, window, wall)
+keys = keyboardControler(theShip, colider, window, wall, player)
 
 
 
