@@ -6,6 +6,7 @@ from objects.drop.drop import *
 import pyglet
 from manager.colider.ballColider import ballColider
 from manager.colider.dropColider import dropColider
+from objects.player import player
 
 class colider :
     wall : wall
@@ -14,13 +15,14 @@ class colider :
     boat : boat
     
 
-    def __init__(self,wall : wall, boat : boat, window : pyglet.window) -> None:
+    def __init__(self,wall : wall, boat : boat, player : player,window : pyglet.window) -> None:
         self.drops = [] #@note drops are generated in the colider.
         self.wall = wall
         self.boat = boat
+        self.player = player
         self.window = window
         self.dt = 0
-        self.dropColider = dropColider(boat)
+        self.dropColider = dropColider(boat,player)
         self.ballColider = ballColider(wall,boat,self.dropColider,window)
 
     def creatBall(self) -> None :

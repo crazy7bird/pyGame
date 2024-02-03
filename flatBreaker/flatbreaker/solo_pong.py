@@ -16,7 +16,7 @@ window.set_fullscreen(True)
 player = player()
 theShip = boat(window)
 wall = wall(window)
-colider = colider(wall,theShip,window)
+colider = colider(wall,theShip,player,window)
 colider.creatBall()
 keys = keyboardControler(theShip, colider, window, wall, player)
 
@@ -43,10 +43,14 @@ def update(dt):
     #     exit()
     colider.update(dt)
 
+def debugMsg(dt):
+    print(f"Player coins : {player.getCoins()}")
+
 # hiding mouse
 window.set_mouse_visible(False)
 
 pyglet.clock.schedule_interval(update, 1/60)
+pyglet.clock.schedule_interval(debugMsg, 5)
 pyglet.app.run()
 
 

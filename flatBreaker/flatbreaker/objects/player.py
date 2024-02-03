@@ -4,6 +4,7 @@ class player :
     def __init__(self) -> None:
         self.coins = 0
         self.balls = 3
+        self.life = 100
         pass
 
     def getCoins (self) -> int :
