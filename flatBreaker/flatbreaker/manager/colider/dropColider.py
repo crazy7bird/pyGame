@@ -26,6 +26,11 @@ class dropColider :
             drop.draw()
     
     def applyBonnus(self,drop) -> None :
+        match drop.__class__.__name__ :
+            case "coin" :
+                self.player.addCoins(+1)
+            case "life" :
+                self.boat.sizeUpdate(10)
         pass
 
     def dropColideBoat(self,drop) -> bool :
@@ -33,8 +38,7 @@ class dropColider :
         if (drop.img.y - drop.img.radius) <= bposition.yMax :
             if(drop.img.y + drop.img.radius) >= bposition.yMin :
                 if(drop.img.x >= bposition.xMin and drop.img.x <= bposition.xMax) :
-                    #self.boat.sizeUpdate(10)
-                    self.player.addCoins(+1)
+                    self.applyBonnus(drop)
                     return True
         return False
     
