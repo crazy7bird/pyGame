@@ -79,11 +79,10 @@ class ballColider :
                 rad = random.random()
                 if(rad>0.66):
                     self.dropColider.creatLife(dropX,dropY)
-                elif rad > 0.33
+                elif rad > 0.33 :
                     self.dropColider.creatCoin(dropX,dropY)
                 else :
-                    pass
-                    #self.dropColider.creat
+                    self.dropColider.creatNewBall(dropX,dropY)
                 del brick
                 
                 self.wall.bricks[r][l] = None

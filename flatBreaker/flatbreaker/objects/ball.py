@@ -1,7 +1,7 @@
 import pyglet 
 from random import random 
 from objects.boat import boatPosition
-BALL_RADIUS = 5
+BALL_RADIUS = 10
 ALLY_COLOR = (25,255,150,255)
 ENEMY_COLOR = (140,87,140,255)
 

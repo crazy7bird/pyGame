@@ -3,12 +3,14 @@
 from objects.drop.drop import drop
 from objects.drop.coin import coin
 from objects.drop.life import life
+from objects.drop.newBall import newBall
+from objects.player import player
 
 
 class dropColider :
     drops = list[drop]
 
-    def __init__(self,boat, player) -> None:
+    def __init__(self,boat, player: player) -> None:
         self.drops = []
         self.boat = boat
         self.player = player
@@ -20,6 +22,9 @@ class dropColider :
     
     def creatLife(self,x,y) -> None :
         self.drops.append(life(x,y))
+    
+    def creatNewBall(self,x,y) -> None :
+        self.drops.append(newBall(x,y))
 
     def draw(self) -> None :
         for drop in self.drops :
@@ -30,7 +35,10 @@ class dropColider :
             case "coin" :
                 self.player.addCoins(+1)
             case "life" :
-                self.boat.sizeUpdate(10)
+                self.player.addLife(+1)
+                self.boat.sizeUpdateByLife(self.player.getLife())
+            case "newBall" :
+                self.player.addBalls(+1)
         pass
 
     def dropColideBoat(self,drop) -> bool :

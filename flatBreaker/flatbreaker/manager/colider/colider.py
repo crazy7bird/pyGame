@@ -1,7 +1,7 @@
 from manager.wall import wall
 from objects.ball import ball
 from objects.boat import boat
-from objects.brick import brick
+
 from objects.drop.drop import *
 import pyglet
 from manager.colider.ballColider import ballColider

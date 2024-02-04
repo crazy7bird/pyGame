@@ -30,6 +30,11 @@ class boat :
     def sizeUpdate(self, size : int) -> None :
         self.size += size
         self.img.width = self.size
+    
+    def sizeUpdateByLife(self, life : int ) -> None :
+        newSize = 2 * life
+        self.size = newSize
+        self.img.width = newSize
 
     def moveRight(self, dt) -> None :
         self.img.x += self.speed * dt
