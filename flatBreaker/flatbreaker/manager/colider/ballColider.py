@@ -2,6 +2,7 @@
 """
 from objects.ball import ball
 from objects.boat import boat
+from objects.player import player
 from manager.wall import wall
 import pyglet
 import random
@@ -10,13 +11,14 @@ from manager.colider.dropColider import dropColider
 class ballColider :
     balls : list [ball]
 
-    def __init__(self,wall : wall, boat : boat, dropColider : dropColider, window : pyglet.window) -> None:
+    def __init__(self,wall : wall, boat : boat, dropColider : dropColider, window : pyglet.window, player : player) -> None:
         self.balls = [] #@note player gives sent ball here.
         self.wall = wall
         self.boat = boat
         self.window = window
         self.dropColider = dropColider
         self.dt = 0
+        self.player = player
 
     def creatBall(self) -> None :
         self.balls.append(ball(locked=True))
@@ -75,17 +77,21 @@ class ballColider :
             if(inside_aera):
                 dropX = (brick.ax + brick.bx) / 2
                 dropY = (brick.by + brick.ay) / 2
-                #self.dropColider.creatCoin(dropX,dropY)
-                rad = random.random()
-                if(rad>0.66):
-                    self.dropColider.creatLife(dropX,dropY)
-                elif rad > 0.33 :
-                    self.dropColider.creatCoin(dropX,dropY)
-                else :
-                    self.dropColider.creatNewBall(dropX,dropY)
-                del brick
-                
-                self.wall.bricks[r][l] = None
+
+                brick.hp -= self.player.atk
+                if(brick.hp <= 0) :
+                    #@Note : the drop creation should be move
+                    rad = random.random()
+                    if(rad>0.66):
+                        self.dropColider.creatLife(dropX,dropY)
+                    elif rad > 0.33 :
+                        self.dropColider.creatCoin(dropX,dropY)
+                    else :
+                        self.dropColider.creatNewBall(dropX,dropY)
+                    #WITH HP NOW
+                    del brick
+                    self.wall.bricks[r][l] = None
+
                 if(cross_top_in or cross_bottom_in) :
                     ball.y_speed = -ball.y_speed
                 if(cross_left_in or cross_right_in):

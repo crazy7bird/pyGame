@@ -5,6 +5,7 @@ class player :
         self.coins = 0
         self.balls = 3
         self.life = 100
+        self.atk = 100
         pass
 
     def getCoins (self) -> int :

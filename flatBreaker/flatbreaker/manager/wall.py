@@ -5,6 +5,7 @@
 """
 import pyglet 
 from objects.bricks.brick import brick
+from objects.bricks.commonBrick import commonBrick
 
 import random
 
@@ -65,7 +66,10 @@ class wall :
             if (random.random() > 0.5) :
                 x = self.min_width + ((BRICK_ROWS - 1) * (self.brick_width + PIXELS_SPACING))
                 y = self.min_height + (l * (self.brick_height + PIXELS_SPACING))
-                row.append(brick(x,y,self.brick_width,self.brick_height))
+                if(random.random()>0.5) :
+                    row.append(brick(x,y,self.brick_width,self.brick_height))
+                else :
+                    row.append(commonBrick(x,y,self.brick_width,self.brick_height))
             else :
                 row.append(None)
         return row

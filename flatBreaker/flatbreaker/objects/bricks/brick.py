@@ -23,6 +23,7 @@ class brick :
         self.by = y + height
         self.width = width
         self.height = height
+        self.hp = 100
     
     def __del__(self):
         self.img.delete()

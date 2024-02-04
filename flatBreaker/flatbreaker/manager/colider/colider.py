@@ -23,7 +23,7 @@ class colider :
         self.window = window
         self.dt = 0
         self.dropColider = dropColider(boat,player)
-        self.ballColider = ballColider(wall,boat,self.dropColider,window)
+        self.ballColider = ballColider(wall,boat,self.dropColider,window,player)
 
     def creatBall(self) -> None :
         self.ballColider.creatBall()
