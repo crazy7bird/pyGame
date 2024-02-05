@@ -27,6 +27,12 @@ class colider :
 
     def creatBall(self) -> None :
         self.ballColider.creatBall()
+    
+    def ballOnBoat(self) -> bool :
+        for ball in self.ballColider.balls :
+            if ball.locked :
+                return True
+        return False
 
     def unlockBalls(self) -> None :
         for ball in self.ballColider.balls :

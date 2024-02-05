@@ -34,7 +34,7 @@ class keyboardControler :
             self.bMoveWall = False
 
         if self.keys[key.O] and not self.reloadBall :
-            if(self.player.getBalls()>0) :
+            if(self.player.getBalls()>0 and self.colider.ballOnBoat() == False) :
                 self.colider.creatBall()
                 self.player.addBalls(-1)
                 self.reloadBall = True
