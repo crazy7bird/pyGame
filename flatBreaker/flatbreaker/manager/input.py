@@ -21,7 +21,12 @@ class keyboardControler :
 
     def update(self,dt) -> None :
         if self.keys[key.SPACE]:
-            self.colider.unlockBalls()
+            if(self.colider.ballOnBoat()):
+                self.colider.unlockBalls()
+            else :
+                if(self.player.getMun()> 0) :
+                    self.player.addMuns(-1)
+                    self.colider.shoot()
         if self.keys[key.A]:
             self.boat.moveLeft(dt)
         if self.keys[key.I] :

@@ -1,11 +1,13 @@
 from manager.wall import wall
 from objects.ball import ball
+from objects.bullet import bullet
 from objects.boat import boat
 
 from objects.drop.drop import *
 import pyglet
 from manager.colider.ballColider import ballColider
 from manager.colider.dropColider import dropColider
+from manager.colider.bulletColider import bulletColider
 from objects.player import player
 
 class colider :
@@ -24,6 +26,11 @@ class colider :
         self.dt = 0
         self.dropColider = dropColider(boat,player)
         self.ballColider = ballColider(wall,boat,self.dropColider,window,player)
+        self.bulletColider = bulletColider(wall,boat,window,player)
+
+    def shoot(self) -> None :
+        self.bulletColider.creatBullet()
+        pass
 
     def creatBall(self) -> None :
         self.ballColider.creatBall()
@@ -42,10 +49,12 @@ class colider :
         self.dt = dt
         self.ballColider.updateBalls(self.dt)
         self.dropColider.updateDrops(self.dt)
+        self.bulletColider.updateBullet(self.dt)
 
     def draw(self) -> None :
         self.ballColider.draw()
         self.dropColider.draw()
+        self.bulletColider.draw()
 
 
 
