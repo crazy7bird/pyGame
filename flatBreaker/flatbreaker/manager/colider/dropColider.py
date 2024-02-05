@@ -3,6 +3,7 @@
 from objects.drop.drop import drop
 from objects.drop.coin import coin
 from objects.drop.life import life
+from objects.drop.ammunation import ammunation
 from objects.drop.newBall import newBall
 from objects.player import player
 
@@ -26,6 +27,9 @@ class dropColider :
     def creatNewBall(self,x,y) -> None :
         self.drops.append(newBall(x,y))
 
+    def creatAmmunation(self,x,y) -> None :
+        self.drops.append(ammunation(x,y))
+
     def draw(self) -> None :
         for drop in self.drops :
             drop.draw()
@@ -39,7 +43,8 @@ class dropColider :
                 self.boat.sizeUpdateByLife(self.player.getLife())
             case "newBall" :
                 self.player.addBalls(+1)
-        pass
+            case "ammunation" :
+                self.player.addMuns(+10)
 
     def dropColideBoat(self,drop) -> bool :
         bposition = self.boat.getPosition()

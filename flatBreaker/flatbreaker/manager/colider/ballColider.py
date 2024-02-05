@@ -53,6 +53,23 @@ class ballColider :
                 del ball
             return True
         return False
+    
+    def generateDrop(self,brick) :
+        dropX = (brick.ax + brick.bx) / 2
+        dropY = (brick.by + brick.ay) / 2
+        match brick.__class__.__name__ :
+            case "brick" :
+                rad = random.random()
+                if(rad>0.66):
+                    self.dropColider.creatLife(dropX,dropY)
+                elif rad > 0.33 :
+                    self.dropColider.creatAmmunation(dropX,dropY)
+                else :
+                    self.dropColider.creatNewBall(dropX,dropY)
+            case "commonBrick" :
+                self.dropColider.creatCoin(dropX,dropY)
+                pass
+        pass
 
     def updateBallsBrickColide(self,ball) -> bool:
         #@note ball radius is not treated.
@@ -75,19 +92,11 @@ class ballColider :
                         ball.dy < brick.by)
             
             if(inside_aera):
-                dropX = (brick.ax + brick.bx) / 2
-                dropY = (brick.by + brick.ay) / 2
 
                 brick.hp -= self.player.atk
                 if(brick.hp <= 0) :
                     #@Note : the drop creation should be move
-                    rad = random.random()
-                    if(rad>0.66):
-                        self.dropColider.creatLife(dropX,dropY)
-                    elif rad > 0.33 :
-                        self.dropColider.creatCoin(dropX,dropY)
-                    else :
-                        self.dropColider.creatNewBall(dropX,dropY)
+                    self.generateDrop(brick)
                     #WITH HP NOW
                     del brick
                     self.wall.bricks[r][l] = None

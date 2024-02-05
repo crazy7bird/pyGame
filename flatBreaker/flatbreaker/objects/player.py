@@ -6,6 +6,7 @@ class player :
         self.balls = 3
         self.life = 100
         self.atk = 100
+        self.mun = 100
         pass
 
     def getCoins (self) -> int :
@@ -32,6 +33,18 @@ class player :
                 self.balls = ball
         return
     
+    def getMun(self) -> int :
+        return self.mun
+    
+    def addMuns(self,mun : int) -> None :
+        if(mun > 0) :
+            self.mun += mun
+        else :
+            mun = self.mun + mun
+            if(mun >= 0) :
+                self.mun = mun
+        return
+    
     def getLife(self) -> int :
         return self.life
     
@@ -42,4 +55,4 @@ class player :
             self.life += life
             if(self.life < 0) :
                 pass
-                #@ GAMEOVER
+                #@Note GAMEOVER
