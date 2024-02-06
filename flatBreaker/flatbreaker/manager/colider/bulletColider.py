@@ -30,7 +30,9 @@ class bulletColider :
     def updateBullet(self, dt) -> None:
         self.dt = dt
         for bullet in self.bullets :
-            bullet.img.y += bullet.y_speed * self.dt
+            for id,img in enumerate(bullet.img) :
+                img.y += (bullet.y_speed - 25*id )* self.dt
+                #bullet.img.y += bullet.y_speed * self.dt
         
     def draw(self) -> None :
         for bullet in self.bullets :
