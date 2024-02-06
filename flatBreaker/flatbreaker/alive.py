@@ -25,9 +25,9 @@ class humanoid :
             self.animation_imgs[i].anchor = 10
             self.animation_imgs[i].width = -20
         self.animation = pyglet.image.Animation.from_image_sequence(self.animation_imgs,.2,True)
-        #self.spr = pyglet.sprite.Sprite(self.animation, x=32, y=32)
-        self.spr = pyglet.sprite.Sprite(self.animation_imgs[0], x=32, y=32)
-        self.spr.update(scale = 10)
+        self.spr = pyglet.sprite.Sprite(self.animation, x=32, y=32)
+        #self.spr = pyglet.sprite.Sprite(self.animation_imgs[0], x=32, y=32)
+        #self.spr.update(scale = 10)
     
     def revertAnimmation(self,left : bool) -> None :
         dir = 20 * (-1 * left)

@@ -19,7 +19,7 @@ class boat :
     window_max_x : int
     speed : int #px/sec
 
-    def __init__(self, window) -> None:
+    def __init__(self, window : pyglet.window) -> None:
         self.window_max_x = window.width
         self.minY = 32
         self.height = 10

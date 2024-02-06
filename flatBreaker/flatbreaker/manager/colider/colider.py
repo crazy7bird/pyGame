@@ -9,6 +9,7 @@ from manager.colider.ballColider import ballColider
 from manager.colider.dropColider import dropColider
 from manager.colider.bulletColider import bulletColider
 from objects.player import player
+from manager.invasion import invasion
 
 class colider :
     wall : wall
@@ -17,7 +18,7 @@ class colider :
     boat : boat
     
 
-    def __init__(self,wall : wall, boat : boat, player : player,window : pyglet.window) -> None:
+    def __init__(self,wall : wall, boat : boat, player : player,window : pyglet.window, invasion : invasion) -> None:
         self.drops = [] #@note drops are generated in the colider.
         self.wall = wall
         self.boat = boat
@@ -26,7 +27,7 @@ class colider :
         self.dt = 0
         self.dropColider = dropColider(boat,player)
         self.ballColider = ballColider(wall,boat,self.dropColider,window,player)
-        self.bulletColider = bulletColider(wall,boat,window,player)
+        self.bulletColider = bulletColider(wall,boat,window,player, invasion)
 
     def shoot(self) -> None :
         self.bulletColider.creatBullet()
