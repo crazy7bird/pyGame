@@ -81,18 +81,21 @@ class ballColider :
         
         for brick,r,l in self.wall.flatWallGenerator(True) :
             #check if something is crossed 
-            cross_left_in =    (ball.img.x < brick.ax and ball.dx > brick.ax)
-            cross_right_in =   (ball.img.x > brick.bx and ball.dx < brick.bx)
-            cross_bottom_in =  (ball.img.y < brick.ay and ball.dy > brick.ay)
-            cross_top_in =     (ball.img.y > brick.by and ball.dy < brick.by)
+            cross_left_in =    (ball.dx > brick.ax and ball.dx < brick.bx)
+            cross_right_in =   (ball.dx < brick.bx)
+            cross_bottom_in =  (ball.dy  > brick.ay)
+            cross_top_in =     (ball.dy  < brick.by)
 
-            inside_aera = (ball.dx > brick.ax and 
-                        ball.dx < brick.bx and
-                        ball.dy > brick.ay and
-                        ball.dy < brick.by)
+            #@note check only if between ax bx and change x direction 
+            #@note check if cross bot or top in the same and change y dir
+
+            inside_aera = (ball.dx> brick.ax and 
+                        ball.dx  < brick.bx and
+                        ball.dy  > brick.ay and
+                        ball.dy  < brick.by)
             
             if(inside_aera):
-
+                print(f"l {cross_left_in}, r {cross_right_in}, b {cross_bottom_in}, t {cross_top_in}")
                 brick.hp -= self.player.atk
                 if(brick.hp <= 0) :
                     #@Note : the drop creation should be move

@@ -9,6 +9,12 @@ class deadInvader() :
     invader : invader
     time : float
 
+@dataclass 
+class livingInvader() :
+    invader : invader
+    time : float
+    mvmt : int
+
 class invasion() :
 
     def __init__(self,window : pyglet.window) -> None:
