@@ -94,23 +94,19 @@ class ballColider :
 
             if(inside_aera):
                 dist_right = abs(max_ball_x - brick.ax)
-                dist_left = abs(min_ball_x - brick.bx)
-                dist_top = abs(min_ball_y - brick.by)
-                dist_bot = abs(max_ball_y - brick.ay)
+                dist_left  = abs(min_ball_x - brick.bx)
+                dist_top   = abs(min_ball_y - brick.by)
+                dist_bot   = abs(max_ball_y - brick.ay)
 
                 cross_vert = min(dist_right, dist_left)
                 cross_horz = min(dist_bot, dist_top)
-                cross_angl = (cross_horz == cross_vert)
 
-                print(f"v : {cross_vert}, h : {cross_horz}, a : {cross_angl}")
-
-                if cross_angl :
-                    ball.x_speed = -ball.x_speed
+                if cross_horz < cross_vert :
                     ball.y_speed = -ball.y_speed
-                elif cross_horz < cross_vert :
-                    ball.y_speed = -ball.y_speed
+                    ball.dy -= cross_horz
                 else :
                     ball.x_speed = -ball.x_speed
+                    ball.dx -= cross_vert
 
                 brick.hp -= self.player.atk
                 if(brick.hp <= 0) :
