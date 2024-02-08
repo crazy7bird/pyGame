@@ -49,7 +49,7 @@ def debugMsg(dt):
 # hiding mouse
 window.set_mouse_visible(False)
 
-pyglet.clock.schedule_interval(update, 1/60)
+pyglet.clock.schedule_interval(update, 1/100)
 pyglet.clock.schedule_interval(debugMsg, 5)
 pyglet.app.run()
 

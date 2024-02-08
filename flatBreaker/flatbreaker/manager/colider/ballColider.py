@@ -81,33 +81,42 @@ class ballColider :
         
         for brick,r,l in self.wall.flatWallGenerator(True) :
             #check if something is crossed 
-            cross_left_in =    (ball.dx > brick.ax and ball.dx < brick.bx)
-            cross_right_in =   (ball.dx < brick.bx)
-            cross_bottom_in =  (ball.dy  > brick.ay)
-            cross_top_in =     (ball.dy  < brick.by)
 
-            #@note check only if between ax bx and change x direction 
-            #@note check if cross bot or top in the same and change y dir
+            min_ball_x = ball.dx - ball.radius
+            max_ball_x = ball.dx + ball.radius
+            min_ball_y = ball.dy - ball.radius
+            max_ball_y = ball.dy + ball.radius
 
-            inside_aera = (ball.dx> brick.ax and 
-                        ball.dx  < brick.bx and
-                        ball.dy  > brick.ay and
-                        ball.dy  < brick.by)
-            
+            inside_aera = (max_ball_x > brick.ax and 
+                           min_ball_x < brick.bx and
+                           max_ball_y > brick.ay and
+                           min_ball_y < brick.by )
+
             if(inside_aera):
-                print(f"l {cross_left_in}, r {cross_right_in}, b {cross_bottom_in}, t {cross_top_in}")
+                dist_right = abs(max_ball_x - brick.ax)
+                dist_left = abs(min_ball_x - brick.bx)
+                dist_top = abs(min_ball_y - brick.by)
+                dist_bot = abs(max_ball_y - brick.ay)
+
+                cross_vert = min(dist_right, dist_left)
+                cross_horz = min(dist_bot, dist_top)
+                cross_angl = (cross_horz == cross_vert)
+
+                print(f"v : {cross_vert}, h : {cross_horz}, a : {cross_angl}")
+
+                if cross_angl :
+                    ball.x_speed = -ball.x_speed
+                    ball.y_speed = -ball.y_speed
+                elif cross_horz < cross_vert :
+                    ball.y_speed = -ball.y_speed
+                else :
+                    ball.x_speed = -ball.x_speed
+
                 brick.hp -= self.player.atk
                 if(brick.hp <= 0) :
-                    #@Note : the drop creation should be move
                     self.generateDrop(brick)
-                    #WITH HP NOW
                     del brick
                     self.wall.bricks[r][l] = None
-
-                if(cross_top_in or cross_bottom_in) :
-                    ball.y_speed = -ball.y_speed
-                if(cross_left_in or cross_right_in):
-                    ball.x_speed = -ball.x_speed
                 return True
         return False
     
