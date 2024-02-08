@@ -4,6 +4,7 @@ from objects.invader import invader
 import random
 from dataclasses import dataclass
 
+
 @dataclass
 class deadInvader() :
     invader : invader
@@ -24,6 +25,11 @@ class invasion() :
         self.width = window.width
         self.height = window.height
         self.dt = 0
+        self.bulletcolider = None
+
+    def addBulletColider(self, bulletColider) -> None :
+       # from manager.colider.bulletColider import bulletColider
+        self.bulletcolider = bulletColider
 
     def newInvader(self) -> None :
         #Generate a new invader.
@@ -45,16 +51,23 @@ class invasion() :
                 invader.invaderDying()
                 self.deadInvaders.append(deadInvader(invader,0))
                 self.invaders.remove(invader)
+                continue
 
         self.dt += dt
-        if self.dt < 2 :
+        if self.dt < 0.2 :
             return
         self.dt = 0
-        pixelMove = [1,2,3,5,8,13,21,34,55,89,144]
+        pixelMoveY = [5,3,2,1,0,-1,-2,-3,-5,-8,-13,-21]
+        pixelMoveX = [-21,-13,-8,-5,-3,-2,-1,0,1,2,3,5,8,13,21]
         for invader in self.invaders :
-            dy = random.choice(pixelMove) * -1
-            dx = random.choice(pixelMove) * (-1 if (random.random() > 0.5 ) else 1)
+            dy = random.choice(pixelMoveY)
+            dx = random.choice(pixelMoveX)
             invader.move(dx,dy)
+
+            if random.random() > 0.5 :
+                x,y = invader.invaderShootPosition()
+                print(f"position : {x},{y}")
+                self.bulletcolider.creatInvaderBullet(x,y)
 
     def draw(self) -> None :
         for invader in self.invaders :

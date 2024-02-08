@@ -37,11 +37,11 @@ class invader():
             return True
         return False
 
-    def invaderShootPosition(self) -> list[int] :
+    def invaderShootPosition(self) -> int :
         #return a point(x,y) where invader shoot should start.
         x = (self.spr.x + HALF_X_SIZE)
         y = (self.spr.y + Y_EYE_SIZE)
-        return (x,y)
+        return x,y
     
     def move(self,x,y) -> None :
         self.spr.x += x

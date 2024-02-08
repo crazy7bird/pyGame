@@ -2,6 +2,7 @@ import pyglet
 
 BULLET_RADIUS = 5
 BULLET_COLOR = (255,175,50,175)
+BULLET_SPEED = 1000
 
 class bullet:
     lost : bool
@@ -10,12 +11,12 @@ class bullet:
     y : int
     img : pyglet.shapes
 
-    def __init__(self,x : int, y : int) -> None:
-        self.y_speed = 1000
-        self.img = [pyglet.shapes.Circle(x,y,BULLET_RADIUS, color=BULLET_COLOR),
-                    pyglet.shapes.Circle(x,y,BULLET_RADIUS-1, color=BULLET_COLOR),
-                    pyglet.shapes.Circle(x,y,BULLET_RADIUS-2, color=BULLET_COLOR),
-                    pyglet.shapes.Circle(x,y,BULLET_RADIUS-3, color=BULLET_COLOR),
+    def __init__(self,x : int, y : int, y_speed : int = BULLET_SPEED, color = BULLET_COLOR) -> None:
+        self.y_speed = y_speed
+        self.img = [pyglet.shapes.Circle(x,y,BULLET_RADIUS, color=color),
+                    pyglet.shapes.Circle(x,y,BULLET_RADIUS-1, color=color),
+                    pyglet.shapes.Circle(x,y,BULLET_RADIUS-2, color=color),
+                    pyglet.shapes.Circle(x,y,BULLET_RADIUS-3, color=color),
                     ]
 
     def __del__(self) :

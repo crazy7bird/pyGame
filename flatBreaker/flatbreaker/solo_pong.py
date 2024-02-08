@@ -20,6 +20,7 @@ wall = wall(window)
 invasion = invasion(window)
 invasion.newInvader()
 colider = colider(wall,theShip,player,window,invasion)
+invasion.addBulletColider(colider.bulletColider)
 colider.creatBall()
 keys = keyboardControler(theShip, colider, window, wall, player)
 
@@ -49,7 +50,7 @@ def debugMsg(dt):
 # hiding mouse
 window.set_mouse_visible(False)
 
-pyglet.clock.schedule_interval(update, 1/100)
+pyglet.clock.schedule_interval(update, 1/60)
 pyglet.clock.schedule_interval(debugMsg, 5)
 pyglet.app.run()
 
