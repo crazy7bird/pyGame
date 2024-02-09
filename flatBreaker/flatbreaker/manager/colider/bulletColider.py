@@ -8,7 +8,7 @@ import pyglet
 import random
 from manager.colider.dropColider import dropColider
 from manager.invasion import invasion
-from objects.invader import invader
+from objects.characters.invaders.invader import invader
 
 INVADER_BULLET_COLOR = (255,0,0,255)
 

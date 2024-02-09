@@ -1,6 +1,6 @@
 # the invader manager
 import pyglet
-from objects.invader import invader
+from objects.characters.invaders.invader import invader
 import random
 from dataclasses import dataclass
 
