@@ -21,8 +21,8 @@ class boat :
 
     def __init__(self, window : pyglet.window) -> None:
         self.window_max_x = window.width
-        self.minY = 32
-        self.height = 10
+        self.minY = 64
+        self.height = 5
         self.size = 200
         self.img = pyglet.shapes.Rectangle(window.width/2, self.minY, self.size, self.height, color = ALLY_COLOR)
         self.speed = 1000
