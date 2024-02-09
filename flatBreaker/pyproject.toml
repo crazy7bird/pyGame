@@ -10,8 +10,7 @@ python = "^3.10"
 pyglet = "^2.0.10"
 
 [tool.poetry.scripts]
-snipet = "flatbreaker.snipet:run"
-alive = "flatbreaker.alive:run"
+demo = "flatbreaker.solo_pong:main"
 
 
 [build-system]

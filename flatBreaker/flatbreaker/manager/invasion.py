@@ -64,9 +64,8 @@ class invasion() :
             dx = random.choice(pixelMoveX)
             invader.move(dx,dy)
 
-            if random.random() > 0.5 :
+            if random.random() > 0.9 :
                 x,y = invader.invaderShootPosition()
-                print(f"position : {x},{y}")
                 self.bulletcolider.creatInvaderBullet(x,y)
 
     def draw(self) -> None :

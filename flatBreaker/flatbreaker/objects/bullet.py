@@ -20,7 +20,8 @@ class bullet:
                     ]
 
     def __del__(self) :
-        self.img.delete()
+        for img in self.img :
+            img.delete()
     
     def draw(self) -> None :
         for img in self.img :

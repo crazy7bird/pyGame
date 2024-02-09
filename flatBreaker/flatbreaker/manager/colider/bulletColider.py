@@ -51,12 +51,19 @@ class bulletColider :
             for id,img in enumerate(bullet.img) :
                 img.y += (bullet.y_speed - (25*id * dir) )* self.dt
 
-            if dt > 0 :
+            if dir > 0 :
                 invaderHit = self.testInvaderHit(bullet)
                 if invaderHit is not None :
                     invaderHit.hp -= self.player.atk
             else :
-                pass
+                boatPosition = self.boat.getPosition()
+                if bullet.img[0].y > boatPosition.yMax :
+                    continue
+                if bullet.img[0].x > boatPosition.xMin and bullet.img[0].x < boatPosition.xMax :
+                    #touch.
+                    self.player.addLife(-1)
+                    self.boat.sizeUpdateByLife(self.player.getLife())
+                    self.bullets.remove(bullet)
 
 
     def draw(self) -> None :
