@@ -1,11 +1,11 @@
 """ functions colides and results for drop to boat 
 """
-from objects.drop.drop import drop
-from objects.drop.coin import coin
-from objects.drop.life import life
-from objects.drop.ammunation import ammunation
-from objects.drop.newBall import newBall
-from objects.player import player
+from flatbreaker.objects.drop.drop import drop
+from flatbreaker.objects.drop.coin import coin
+from flatbreaker.objects.drop.life import life
+from flatbreaker.objects.drop.ammunation import ammunation
+from flatbreaker.objects.drop.newBall import newBall
+from flatbreaker.objects.player import player
 
 
 class dropColider :

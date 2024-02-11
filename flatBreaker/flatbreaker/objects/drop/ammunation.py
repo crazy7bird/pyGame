@@ -1,4 +1,4 @@
-from objects.drop.drop import drop
+from flatbreaker.objects.drop.drop import drop
 
 class ammunation(drop) :
     def __init__(self, x: int, y: int) -> None:

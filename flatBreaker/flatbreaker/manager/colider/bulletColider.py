@@ -1,14 +1,14 @@
 """ functions colides and results for balllls 
 """
-from objects.bullet import bullet
-from objects.boat import boat
-from objects.player import player
-from manager.wall import wall
+from flatbreaker.objects.bullet import bullet
+from flatbreaker.objects.boat import boat
+from flatbreaker.objects.player import player
+from flatbreaker.manager.wall import wall
 import pyglet
 import random
-from manager.colider.dropColider import dropColider
-from manager.invasion import invasion
-from objects.characters.invaders.invader import invader
+from flatbreaker.manager.colider.dropColider import dropColider
+from flatbreaker.manager.invasion import invasion
+from flatbreaker.objects.characters.invaders.invader import invader
 
 INVADER_BULLET_COLOR = (255,0,0,255)
 

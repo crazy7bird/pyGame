@@ -4,8 +4,8 @@
         - calculate colisions with brick
 """
 import pyglet 
-from objects.bricks.brick import brick
-from objects.bricks.commonBrick import commonBrick
+from flatbreaker.objects.bricks.brick import brick
+from flatbreaker.objects.bricks.commonBrick import commonBrick
 
 import random
 

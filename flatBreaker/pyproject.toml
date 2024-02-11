@@ -3,6 +3,7 @@ name = "flatbreaker"
 version = "0.1.0"
 description = ""
 authors = ["crazybird <roy7alexandre@gmail.com>"]
+packages = [{include = "flatbreaker"}]
 readme = "README.md"
 
 [tool.poetry.dependencies]

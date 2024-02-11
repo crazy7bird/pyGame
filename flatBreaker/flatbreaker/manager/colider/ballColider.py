@@ -1,12 +1,12 @@
 """ functions colides and results for balllls 
 """
-from objects.ball import ball
-from objects.boat import boat
-from objects.player import player
-from manager.wall import wall
+from flatbreaker.objects.ball import ball
+from flatbreaker.objects.boat import boat
+from flatbreaker.objects.player import player
+from flatbreaker.manager.wall import wall
 import pyglet
 import random
-from manager.colider.dropColider import dropColider
+from flatbreaker.manager.colider.dropColider import dropColider
 
 class ballColider :
     balls : list [ball]

@@ -1,5 +1,5 @@
 import pyglet
-from objects.boat import boatPosition
+from flatbreaker.objects.boat import boatPosition
 
 ITEM_RADIUS = 5
 DEFAULT_ACC = 10

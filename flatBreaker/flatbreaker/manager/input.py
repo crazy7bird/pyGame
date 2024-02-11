@@ -1,9 +1,9 @@
 import pyglet
 from pyglet.window import key
-from objects.boat import boat
-from manager.wall import wall
-from manager.colider.colider import colider
-from objects.player import player
+from flatbreaker.objects.boat import boat
+from flatbreaker.manager.wall import wall
+from flatbreaker.manager.colider.colider import colider
+from flatbreaker.objects.player import player
 
 """Get Keyboard inputs
 """

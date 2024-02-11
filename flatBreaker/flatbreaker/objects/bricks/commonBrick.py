@@ -1,4 +1,4 @@
-from objects.bricks.brick import brick
+from flatbreaker.objects.bricks.brick import brick
 
 class commonBrick(brick) :
 

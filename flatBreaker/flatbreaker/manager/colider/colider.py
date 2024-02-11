@@ -1,15 +1,14 @@
-from manager.wall import wall
-from objects.ball import ball
-from objects.bullet import bullet
-from objects.boat import boat
+from flatbreaker.manager.wall import wall
+from flatbreaker.objects.ball import ball
+from flatbreaker.objects.boat import boat
 
-from objects.drop.drop import *
+from flatbreaker.objects.drop.drop import *
 import pyglet
-from manager.colider.ballColider import ballColider
-from manager.colider.dropColider import dropColider
-from manager.colider.bulletColider import bulletColider
-from objects.player import player
-from manager.invasion import invasion
+from flatbreaker.manager.colider.ballColider import ballColider
+from flatbreaker.manager.colider.dropColider import dropColider
+from flatbreaker.manager.colider.bulletColider import bulletColider
+from flatbreaker.objects.player import player
+from flatbreaker.manager.invasion import invasion
 
 class colider :
     wall : wall
