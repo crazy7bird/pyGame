@@ -50,6 +50,10 @@ class bulletColider :
             
             for id,img in enumerate(bullet.img) :
                 img.y += (bullet.y_speed - (25*id * dir) )* self.dt
+            
+            if bullet.img[-1].y > self.window.height or bullet.img[-1].y < 0 :
+                self.bullets.remove(bullet)
+                continue
 
             if dir > 0 :
                 invaderHit = self.testInvaderHit(bullet)

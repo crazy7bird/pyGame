@@ -41,6 +41,9 @@ def update(dt):
 
 def debugMsg(dt):
     print(f"Player coins : {player.getCoins()}")
+    print(f"bullets : {len(colider.bulletColider.bullets)}")
+    print(f"Drops : {len(colider.dropColider.drops)}")
+    print(f"invader : {len(invasion.invaders)}")
     invasion.newInvader()
 
 # hiding mouse
